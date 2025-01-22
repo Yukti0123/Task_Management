@@ -1,0 +1,208 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f9f9f9;
+}
+h2 {
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}
+form {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+}
+form div {
+  margin-bottom: 15px;
+}
+form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+form input, form textarea, form select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+form button:hover {
+  background-color: #0056b3;
+}
+.task-list {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.task-list h3 {
+  margin: 0;
+  color: #007bff;
+}
+.task-list p {
+  margin: 5px 0;
+  color: #555;
+}
+.link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+.link:hover {
+  text-decoration: underline;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+table, th, td {
+  border: 1px solid #ddd;
+}
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+th {
+  background-color: #f4f4f4;
+}
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+tr:hover {
+  background-color: #f1f1f1;
+}
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+
+.filter-sort-section {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+}
+.filter-sort-section h3 {
+  margin-bottom: 15px;
+  color: #007bff;
+}
+.filter-sort-section div {
+  margin-bottom: 15px;
+}
+.filter-sort-section label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+.filter-sort-section select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.filter-sort-section button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.filter-sort-section button:hover {
+  background-color: #0056b3;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px; /* Space between the input fields */
+}
+
+.checkbox-container input {
+  margin-right: 8px; /* Space between checkbox and label */
+}
+
+.checkbox-container label {
+  font-size: 1rem;
+  color: #333;
+}
+
+
+.task-detail-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-detail h2 {
+  color: #333;
+  text-align: center;
+}
+
+.task-info {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.task-info h3 {
+  color: #4CAF50;
+}
+
+.task-info p {
+  font-size: 1rem;
+  color: #555;
+}
+
+button {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: none;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+
+
+form button,
+.filter-sort-section button {
+  width: 100%; 
+}
+
+button {
+  width: auto; 
+}
+
+
+
