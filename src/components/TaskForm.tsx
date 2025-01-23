@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Task from "../../interface";
+import TaskFormProps from "../../props";
+import SortAndFilter from "./SortandFilter.tsx";
 
-interface TaskFormProps {
-  tasks: Task[];
-  addTask: (task: Task) => void;
-}
+// interface TaskFormProps {
+//   tasks: Task[];
+//   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
+// }
 
-const TaskForm: React.FC<TaskFormProps> = ({ tasks, addTask }) => {
+const TaskForm: React.FC<TaskFormProps> = ({ tasks, setTasks }) => {
   const [task, setTask] = useState<Task>({
     id: Date.now(),
     name: "",
@@ -16,8 +18,34 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, addTask }) => {
     isComplete: false,
   });
 
-  const navigate = useNavigate();
+  const [errors, setErrors] = useState({ name: false, description: false });
+
   const { state } = useLocation();
+
+  const [filter, setFilter] = useState(
+    state?.filter || { isComplete: "", priority: "" }
+  );
+
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
+    state?.sortOrder || "desc"
+  );
+
+  const navigate = useNavigate();
+
+  const addTask = (newTask: Omit<Task, "id">): Task | null => {
+    const isDuplicate = tasks.some(
+      (task) =>
+        task.name.toLowerCase() === newTask.name.toLowerCase() ||
+        task.description.toLowerCase() === newTask.description.toLowerCase()
+    );
+    if (isDuplicate) {
+      alert("Task with the same name or description already exists!");
+      return null;
+    }
+    const taskWithId: Task = { id: Date.now(), ...newTask };
+    setTasks((prevTasks) => [...prevTasks, taskWithId]);
+    return taskWithId;
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -49,17 +77,11 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, addTask }) => {
 
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
-    addTask(task);
-    navigate("/task-detail", { state: { task } });
+    if (validateForm()) {
+      addTask(task);
+      navigate("/task-detail", { state: { task } });
+    }
   };
-
-  const [filter, setFilter] = useState(
-    state?.filter || { isComplete: "", priority: "" }
-  );
-
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
-    state?.sortOrder || "desc"
-  );
 
   const filteredAndSortedTasks = tasks
     .filter((task) => {
@@ -76,18 +98,13 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, addTask }) => {
 
   const topTasks = filteredAndSortedTasks.slice(0, 5);
 
-  const handleFilterChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      [name]: value,
-    }));
-  };
-
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOrder(e.target.value as "asc" | "desc");
+  const validateForm = () => {
+    const isValid = task.name.trim() !== "" && task.description.trim() !== "";
+    setErrors({
+      name: task.name.trim() === "",
+      description: task.description.trim() === "",
+    });
+    return isValid;
   };
 
   return (
@@ -102,9 +119,10 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, addTask }) => {
             name="name"
             value={task.name}
             onChange={handleInputChange}
-            required
           />
+          {errors.name && <span className="error-message">Required</span>}
         </div>
+
         <div>
           <label htmlFor="task-description">Task description</label>
           <textarea
@@ -112,8 +130,10 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, addTask }) => {
             name="description"
             value={task.description}
             onChange={handleInputChange}
-            required
           />
+          {errors.description && (
+            <span className="error-message">Required</span>
+          )}
         </div>
         <div>
           <label htmlFor="task-priority">Priority</label>
@@ -142,6 +162,13 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, addTask }) => {
 
         <button type="submit">Submit</button>
       </form>
+
+      <SortAndFilter
+        filter={filter}
+        setFilter={setFilter}
+        sortOrder={sortOrder}
+        setSortOrder={setSortOrder}
+      />
 
       {/* Table of Top 5 Tasks */}
       <div>
@@ -172,61 +199,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, addTask }) => {
         )}
       </div>
 
-      {/* Filter Section */}
-      <div className="filter-sort-section">
-        <h3>Filter Tasks</h3>
-        <div>
-          <label htmlFor="filter-priority">Priority</label>
-          <select
-            id="filter-priority"
-            name="priority"
-            value={filter.priority}
-            onChange={handleFilterChange}
-          >
-            <option value="">All</option>
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="filter-complete">Completion Status</label>
-          <select
-            id="filter-complete"
-            name="isComplete"
-            value={filter.isComplete}
-            onChange={handleFilterChange}
-          >
-            <option value="">All</option>
-            <option value="true">Completed</option>
-            <option value="false">Not Completed</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Sorting Section */}
-      <div className="filter-sort-section">
-        <h3>Sort Tasks</h3>
-        <label htmlFor="sort-order">Sort By</label>
-        <select id="sort-order" value={sortOrder} onChange={handleSortChange}>
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
-        </select>
-      </div>
-
-      <div style={{ marginTop: "20px" }}>
-        <button
-          onClick={() => navigate("/tasks")}
-          style={{
-            padding: "10px",
-            backgroundColor: "#4CAF50",
-            color: "white",
-          }}
-        >
-          View More
-        </button>
-      </div>
+      {tasks.length > 5 && (
+        <button onClick={() => navigate("/tasks")}>View More</button>
+      )}
     </div>
   );
 };
