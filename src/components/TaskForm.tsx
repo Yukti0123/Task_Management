@@ -188,7 +188,17 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, setTasks }) => {
             <tbody>
               {topTasks.map((task) => (
                 <tr key={task.id}>
-                  <td>{task.name}</td>
+                  <td>
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/task-detail", { state: { task } });
+                      }}
+                    >
+                      {task.name}
+                    </a>
+                  </td>
                   <td>{task.description}</td>
                   <td>{task.priority}</td>
                   <td>{task.isComplete ? "Completed" : "Not Completed"}</td>
