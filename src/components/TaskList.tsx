@@ -15,7 +15,9 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, setTasks }) => {
     state?.filter || { isComplete: "", priority: "" }
   );
 
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
+  type SortOrder = "asc" | "desc";
+
+  const [sortOrder, setSortOrder] = useState<SortOrder>(
     state?.sortOrder || "asc"
   );
 

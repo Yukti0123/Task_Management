@@ -4,11 +4,6 @@ import Task from "../../interface";
 import TaskFormProps from "../../props";
 import SortAndFilter from "./SortandFilter.tsx";
 
-// interface TaskFormProps {
-//   tasks: Task[];
-//   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
-// }
-
 const TaskForm: React.FC<TaskFormProps> = ({ tasks, setTasks }) => {
   const [task, setTask] = useState<Task>({
     id: Date.now(),
@@ -26,7 +21,10 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, setTasks }) => {
     state?.filter || { isComplete: "", priority: "" }
   );
 
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
+  type Priority = "Low" | "Medium" | "High";
+  type SortOrder = "asc" | "desc";
+
+  const [sortOrder, setSortOrder] = useState<SortOrder>(
     state?.sortOrder || "desc"
   );
 
@@ -62,16 +60,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, setTasks }) => {
   ): void => {
     setTask((prevTask) => ({
       ...prevTask,
-      priority: e.target.value as "Low" | "Medium" | "High",
-    }));
-  };
-
-  const handleCheckboxChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setTask((prevTask) => ({
-      ...prevTask,
-      isComplete: e.target.checked,
+      priority: e.target.value as Priority,
     }));
   };
 
@@ -149,17 +138,6 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, setTasks }) => {
           </select>
         </div>
 
-        <div className="checkbox-container">
-          <label htmlFor="task-complete">Task Complete</label>
-          <input
-            type="checkbox"
-            id="task-complete"
-            name="isComplete"
-            checked={task.isComplete}
-            onChange={handleCheckboxChange}
-          />
-        </div>
-
         <button type="submit">Submit</button>
       </form>
 
@@ -189,15 +167,15 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, setTasks }) => {
               {topTasks.map((task) => (
                 <tr key={task.id}>
                   <td>
-                    <a
-                      href="#"
+                    <button
                       onClick={(e) => {
                         e.preventDefault();
                         navigate("/task-detail", { state: { task } });
                       }}
+                      className="link-button"
                     >
                       {task.name}
-                    </a>
+                    </button>
                   </td>
                   <td>{task.description}</td>
                   <td>{task.priority}</td>

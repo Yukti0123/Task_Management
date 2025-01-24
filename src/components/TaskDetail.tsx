@@ -2,23 +2,25 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Task from "../../interface";
 import TaskDetailProps from "../../props";
-// interface TaskDetailProps {
-//   tasks: Task[];
-//   setTasks: React.Dispatch<React.SetStateAction<Task[]>>;
-// }
+
 const TaskDetail: React.FC<TaskDetailProps> = ({ tasks, setTasks }) => {
-  const { state } = useLocation();
-  const initialTask = state?.task || null;
-  const [task, setTask] = useState<Task | null>(initialTask);
   const [errors, setErrors] = useState({ name: false, description: false });
+
+  const { state } = useLocation();
+
+  const initialTask = state?.task || null;
+
+  const [task, setTask] = useState<Task | null>(initialTask);
+
   const navigate = useNavigate();
-  // Redirect if the task is not found
+
   useEffect(() => {
     if (!initialTask) {
       alert("Task not found!");
       navigate("/tasks");
     }
   }, [initialTask, navigate]);
+
   if (!task) {
     return null;
   }
@@ -30,6 +32,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ tasks, setTasks }) => {
     });
     return isValid;
   };
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
@@ -63,6 +66,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ tasks, setTasks }) => {
       navigate("/tasks");
     }
   };
+
   return (
     <div className="task-detail-container">
       <h2>Task Detail</h2>

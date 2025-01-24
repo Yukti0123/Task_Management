@@ -210,5 +210,29 @@ button {
   margin-top: 5px;
 }
 
+.link-button {
+  background: none; /* Remove background */
+  color: #007bff; /* Link-like blue color */
+  border: none; /* Remove default button border */
+  padding: 0; /* Remove padding */
+  text-decoration: underline; /* Underline like a link */
+  cursor: pointer; /* Make the cursor a pointer when hovering */
+  font: inherit; /* Inherit the font style from the parent element */
+}
+
+.link-button:hover {
+  color: #0056b3; /* Darker color on hover */
+  text-decoration: none; /* Remove underline on hover */
+}
+
+.link-button:focus {
+  outline: none; /* Remove the focus outline */
+}
+
+.link-button:active {
+  color: #004085; /* Even darker color on click */
+}
+
+
 
 
