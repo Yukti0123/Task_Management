@@ -55,14 +55,12 @@ const TaskForm: React.FC<TaskFormProps> = ({ tasks, setTasks }) => {
     }));
   };
 
-  const handlePriorityChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ): void => {
+  function handlePriorityChange(e: React.ChangeEvent<HTMLSelectElement>): void {
     setTask((prevTask) => ({
       ...prevTask,
       priority: e.target.value as Priority,
     }));
-  };
+  }
 
   const handleSubmit = (e: React.FormEvent): void => {
     e.preventDefault();

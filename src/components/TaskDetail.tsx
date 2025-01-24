@@ -14,16 +14,6 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ tasks, setTasks }) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!initialTask) {
-      alert("Task not found!");
-      navigate("/tasks");
-    }
-  }, [initialTask, navigate]);
-
-  if (!task) {
-    return null;
-  }
   const validateForm = (): boolean => {
     const isValid = task.name.trim() !== "" && task.description.trim() !== "";
     setErrors({
@@ -66,6 +56,17 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ tasks, setTasks }) => {
       navigate("/tasks");
     }
   };
+
+  useEffect(() => {
+    if (!initialTask) {
+      alert("Task not found!");
+      navigate("/tasks");
+    }
+  }, [initialTask, navigate]);
+
+  if (!task) {
+    return null;
+  }
 
   return (
     <div className="task-detail-container">
