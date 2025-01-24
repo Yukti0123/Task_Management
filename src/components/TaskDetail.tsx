@@ -14,15 +14,6 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ tasks, setTasks }) => {
 
   const navigate = useNavigate();
 
-  const validateForm = (): boolean => {
-    const isValid = task.name.trim() !== "" && task.description.trim() !== "";
-    setErrors({
-      name: task.name.trim() === "",
-      description: task.description.trim() === "",
-    });
-    return isValid;
-  };
-
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
@@ -67,6 +58,15 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ tasks, setTasks }) => {
   if (!task) {
     return null;
   }
+
+  const validateForm = (): boolean => {
+    const isValid = task.name.trim() !== "" && task.description.trim() !== "";
+    setErrors({
+      name: task.name.trim() === "",
+      description: task.description.trim() === "",
+    });
+    return isValid;
+  };
 
   return (
     <div className="task-detail-container">
